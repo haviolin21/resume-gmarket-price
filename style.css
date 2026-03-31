@@ -12,6 +12,7 @@
   --border-dark: #222222;
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.15);
   --container-max: 1140px;
   --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -35,13 +36,17 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 a {
-  text-decoration: none !important; /* Ensure no underlines globally */
+  text-decoration: none !important;
   color: inherit;
 }
 
 ul, li {
-  list-style: none !important; /* Ensure no default bullets */
+  list-style: none !important;
 }
 
 /* Utils */
@@ -106,7 +111,6 @@ nav ul li a {
 
 nav ul li a:hover, nav ul li a.active {
   color: var(--gmarket-green);
-  text-decoration: none !important;
 }
 
 .btn-download-sm {
@@ -258,7 +262,6 @@ section {
 }
 
 .motivation-content strong {
-  /* Subtle highlight instead of gradient which can look like a thick underline */
   background-color: rgba(0, 209, 75, 0.1);
   padding: 0 4px;
 }
@@ -367,7 +370,7 @@ section {
 }
 
 .exp-list li::before {
-  content: ""; /* Changed from • to custom bullet to avoid conflict */
+  content: "";
   position: absolute;
   left: 0;
   top: 11px;
@@ -405,12 +408,30 @@ section {
   border: 1px solid var(--border-light);
   padding: 80px;
   transition: var(--transition);
+  cursor: pointer;
+  position: relative;
 }
 
 .project-card:hover {
   border-color: var(--gmarket-green);
   transform: translateY(-8px);
   box-shadow: var(--shadow-md);
+}
+
+.project-card::after {
+  content: "View Details +";
+  position: absolute;
+  bottom: 30px;
+  right: 80px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--gmarket-green);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.project-card:hover::after {
+  opacity: 1;
 }
 
 .p-head {
@@ -481,19 +502,134 @@ section {
   color: var(--text-muted);
 }
 
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 2000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.modal-content {
+  background: #fff;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 80px;
+  position: relative;
+  border-radius: 4px;
+  animation: modalSlideUp 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  font-weight: 300;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: var(--gmarket-green);
+}
+
+.modal-body h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: -1.5px;
+}
+
+.modal-body .modal-period {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 48px;
+}
+
+.modal-section {
+  margin-bottom: 48px;
+}
+
+.modal-section h3 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--gmarket-black);
+  display: inline-block;
+}
+
+.modal-section h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--gmarket-green);
+}
+
+.modal-summary-list li {
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.modal-summary-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 8px;
+  height: 2px;
+  background: var(--gmarket-black);
+}
+
+.modal-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text-sub);
+}
+
+.modal-text p {
+  margin-bottom: 24px;
+}
+
 /* Footer */
 footer {
-  background: var(--gmarket-black);
-  color: #fff;
-  padding: 140px 0 80px;
+  background: var(--bg-gray); /* Changed from black to gray for consistency */
+  color: var(--text-main);
+  padding: 100px 0 60px;
+  border-top: 1px solid var(--border-light);
 }
 
 footer .logo {
-  color: #fff;
+  color: var(--gmarket-black);
   font-size: 2.4rem;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   display: block;
 }
+
+footer .logo span { color: var(--gmarket-green); }
 
 .f-contact {
   display: flex;
@@ -514,10 +650,10 @@ footer .logo {
 }
 
 .copy {
-  margin-top: 140px;
+  margin-top: 100px;
   font-size: 1rem;
-  color: #555;
-  border-top: 1px solid #333;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-light);
   padding-top: 40px;
 }
 
@@ -528,13 +664,14 @@ footer .logo {
   .exp-row { grid-template-columns: 1fr; gap: 40px; }
   .p-grid { grid-template-columns: 1fr; }
   .p-stats { flex-direction: column; gap: 40px; }
+  .modal-content { padding: 40px; }
 }
 
 @media (max-width: 768px) {
   .hero h1 { font-size: 2.8rem; }
   .section-title { font-size: 2.4rem; }
   .motivation-box { padding: 40px; }
-  .p-card { padding: 40px; }
+  .project-card { padding: 40px; }
   nav ul { display: none; }
   .f-contact { flex-direction: column; gap: 40px; }
 }
