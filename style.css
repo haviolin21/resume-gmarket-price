@@ -46,7 +46,7 @@ body.dark-mode .tool-tag { background: #222222; color: #eee; }
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Lenis 충돌 방지를 위해 기본 smooth 스크롤 제거 */
 }
 
 body {

@@ -3,11 +3,11 @@ lucide.createIcons();
 
 // Initialize Smooth Scroll (Lenis)
 const lenis = new Lenis({
-    lerp: 0.1, // 더 직관적이고 빠른 반응성을 위해 lerp 사용
+    lerp: 0.2, // 반응성을 대폭 높임 (0.1 -> 0.2)
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1.1,
+    wheelMultiplier: 1.5, // 한 번의 휠로 더 많이 이동 (1.1 -> 1.5)
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false,
