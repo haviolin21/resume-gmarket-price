@@ -1,3 +1,6 @@
+// Initialize Lucide Icons
+lucide.createIcons();
+
 // Project Data
 const projects = [
     {
@@ -70,6 +73,7 @@ function openModal(index) {
     const project = projects[index];
     const modalBody = document.getElementById('modalBody');
     const modal = document.getElementById('projectModal');
+    const modalContent = document.getElementById('modalContent');
 
     modalBody.innerHTML = `
         <span class="modal-period">${project.period}</span>
@@ -91,6 +95,7 @@ function openModal(index) {
     `;
 
     modal.style.display = 'flex';
+    modalContent.scrollTop = 0; // Reset scroll position
     document.body.classList.add('modal-open');
 }
 
@@ -105,6 +110,36 @@ function closeModal(event) {
 // Global scope access for onclick
 window.openModal = openModal;
 window.closeModal = closeModal;
+
+// Number Counting Animation
+const countElements = document.querySelectorAll('.counter');
+const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = entry.target;
+            const targetVal = parseFloat(target.getAttribute('data-target'));
+            animateValue(target, 0, targetVal, 1500);
+            countObserver.unobserve(target);
+        }
+    });
+}, { threshold: 0.5 });
+
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const isFloat = end % 1 !== 0;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        let currentVal = progress * (end - start) + start;
+        obj.innerHTML = isFloat ? currentVal.toFixed(1) : Math.floor(currentVal);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+countElements.forEach(el => countObserver.observe(el));
 
 // Smooth Scrolling for All Internal Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -155,11 +190,6 @@ window.addEventListener('scroll', () => {
 });
 
 // Animation on scroll (Intersection Observer)
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-};
-
 const revealOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -167,9 +197,9 @@ const revealOnScroll = new IntersectionObserver((entries, observer) => {
             observer.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.1 });
 
-document.querySelectorAll('section, .cap-item, .exp-row, .project-card').forEach(el => {
+document.querySelectorAll('section, .cap-item, .exp-row, .project-card, .divider').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
     el.style.transition = 'all 0.8s cubic-bezier(0.2, 0, 0.2, 1)';
