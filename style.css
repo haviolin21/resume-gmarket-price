@@ -592,6 +592,7 @@ section {
   font-weight: 900;
   color: var(--gmarket-green);
   margin-bottom: 8px;
+  white-space: nowrap;
 }
 
 .p-stats .lab {
