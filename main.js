@@ -1,10 +1,29 @@
 // Initialize Lucide Icons
 lucide.createIcons();
 
+// Initialize Smooth Scroll (Lenis)
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+})
+
+function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+}
+
+requestAnimationFrame(raf)
+
 // Theme Toggle Logic
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
-const iconContainer = themeToggle.querySelector('i');
 
 // Check for saved theme preference
 const savedTheme = localStorage.getItem('theme');
@@ -21,7 +40,7 @@ themeToggle.addEventListener('click', () => {
 
 function updateThemeIcon(isDark) {
     themeToggle.innerHTML = isDark ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
-    lucide.createIcons(); // Re-initialize icons for the new HTML
+    lucide.createIcons(); 
 }
 
 // Project Data
@@ -164,7 +183,7 @@ function animateValue(obj, start, end, duration) {
 
 countElements.forEach(el => countObserver.observe(el));
 
-// Smooth Scrolling for All Internal Links
+// Smooth Scrolling for All Internal Links (Integrated with Lenis)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
@@ -173,10 +192,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
             e.preventDefault();
-            window.scrollTo({
-                top: targetElement.offsetTop - 80, 
-                behavior: 'smooth'
-            });
+            lenis.scrollTo(targetElement, {
+                offset: -80,
+                duration: 1.5,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            })
         }
     });
 });
