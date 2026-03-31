@@ -1,6 +1,29 @@
 // Initialize Lucide Icons
 lucide.createIcons();
 
+// Theme Toggle Logic
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+const iconContainer = themeToggle.querySelector('i');
+
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    body.classList.add('dark-mode');
+    updateThemeIcon(true);
+}
+
+themeToggle.addEventListener('click', () => {
+    const isDark = body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcon(isDark);
+});
+
+function updateThemeIcon(isDark) {
+    themeToggle.innerHTML = isDark ? '<i data-lucide="sun"></i>' : '<i data-lucide="moon"></i>';
+    lucide.createIcons(); // Re-initialize icons for the new HTML
+}
+
 // Project Data
 const projects = [
     {

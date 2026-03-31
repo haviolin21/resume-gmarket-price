@@ -17,24 +17,27 @@
   --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Dark Mode Basic Support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-main: #f5f5f5;
-    --text-sub: #aaaaaa;
-    --text-muted: #777777;
-    --bg-white: #0a0a0a;
-    --bg-gray: #151515;
-    --border-light: #222222;
-    --gmarket-black: #ffffff;
-  }
-  header { background: rgba(10, 10, 10, 0.8) !important; }
-  header.scrolled { background: #0a0a0a !important; }
-  .cap-item, .project-card { background: #151515; }
-  .p-stats { background: #222222; }
-  .modal-content { background: #151515; }
-  footer { background: #000; border-top: 1px solid #111; }
+/* Dark Mode Class */
+body.dark-mode {
+  --text-main: #f5f5f5;
+  --text-sub: #aaaaaa;
+  --text-muted: #777777;
+  --bg-white: #0a0a0a;
+  --bg-gray: #151515;
+  --border-light: #222222;
+  --gmarket-black: #ffffff;
 }
+
+body.dark-mode header { background: rgba(10, 10, 10, 0.8) !important; }
+body.dark-mode header.scrolled { background: #0a0a0a !important; }
+body.dark-mode .cap-item, body.dark-mode .project-card { background: #151515; }
+body.dark-mode .p-stats { background: #222222; }
+body.dark-mode .modal-content { background: #151515; }
+body.dark-mode footer { background: #000; border-top: 1px solid #111; }
+body.dark-mode .btn-download-sm { background: #ffffff; color: #000; }
+body.dark-mode .btn-main { background: #ffffff; color: #000; border-color: #ffffff; }
+body.dark-mode .btn-outline { border-color: #ffffff; color: #ffffff; }
+body.dark-mode .tool-tag { background: #222222; color: #eee; }
 
 * {
   box-sizing: border-box;
@@ -53,6 +56,7 @@ body {
   line-height: 1.6;
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.modal-open {
@@ -121,6 +125,12 @@ header .container {
 
 .logo span { color: var(--gmarket-green); }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 nav ul {
   display: flex;
   gap: 40px;
@@ -138,6 +148,22 @@ nav ul li a:hover, nav ul li a.active {
   color: var(--gmarket-green);
 }
 
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--gmarket-green);
+}
+
 .btn-download-sm {
   background: var(--gmarket-black);
   color: var(--bg-white);
@@ -145,7 +171,6 @@ nav ul li a:hover, nav ul li a.active {
   border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 700;
-  margin-left: 20px;
   transition: var(--transition);
 }
 
@@ -279,7 +304,7 @@ section {
   color: var(--gmarket-green);
   display: block;
   margin-bottom: 16px;
-  letter-spacing: 4px; /* Increased letter-spacing */
+  letter-spacing: 4px; 
   text-transform: uppercase;
 }
 
