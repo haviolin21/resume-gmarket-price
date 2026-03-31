@@ -35,6 +35,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+a {
+  text-decoration: none !important; /* Ensure no underlines globally */
+  color: inherit;
+}
+
+ul, li {
+  list-style: none !important; /* Ensure no default bullets */
+}
+
 /* Utils */
 .container {
   max-width: var(--container-max);
@@ -97,6 +106,7 @@ nav ul li a {
 
 nav ul li a:hover, nav ul li a.active {
   color: var(--gmarket-green);
+  text-decoration: none !important;
 }
 
 .btn-download-sm {
@@ -248,7 +258,9 @@ section {
 }
 
 .motivation-content strong {
-  background: linear-gradient(transparent 70%, rgba(0, 209, 75, 0.2) 30%);
+  /* Subtle highlight instead of gradient which can look like a thick underline */
+  background-color: rgba(0, 209, 75, 0.1);
+  padding: 0 4px;
 }
 
 /* About Grid */
@@ -355,10 +367,14 @@ section {
 }
 
 .exp-list li::before {
-  content: "•";
+  content: ""; /* Changed from • to custom bullet to avoid conflict */
   position: absolute;
   left: 0;
-  color: var(--gmarket-green);
+  top: 11px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--gmarket-green);
+  border-radius: 50%;
 }
 
 .tool-tags {
@@ -501,7 +517,7 @@ footer .logo {
   margin-top: 140px;
   font-size: 1rem;
   color: #555;
-  border-top: 1px solid #222;
+  border-top: 1px solid #333;
   padding-top: 40px;
 }
 
