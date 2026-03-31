@@ -28,21 +28,26 @@
     <header id="header">
         <div class="container">
             <a href="#" class="logo">HYUNTAEK<span>.HA</span></a>
-            <nav>
-                <ul>
-                    <li><a href="#about">ABOUT</a></li>
-                    <li><a href="#motivation">MOTIVATION</a></li>
-                    <li><a href="#experience">EXPERIENCE</a></li>
-                    <li><a href="#projects">PROJECTS</a></li>
-                    <li><a href="#education">EDUCATION</a></li>
-                    <li class="header-right">
-                        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
-                            <i data-lucide="moon"></i>
-                        </button>
-                        <a href="resume.pdf" class="btn-download-sm" download>RESUME PDF</a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="header-right-container" style="display: flex; align-items: center; gap: 15px;">
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#about">ABOUT</a></li>
+                        <li><a href="#motivation">MOTIVATION</a></li>
+                        <li><a href="#experience">EXPERIENCE</a></li>
+                        <li><a href="#projects">PROJECTS</a></li>
+                        <li><a href="#education">EDUCATION</a></li>
+                        <li class="header-right">
+                            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                                <i data-lucide="moon"></i>
+                            </button>
+                            <a href="resume.pdf" class="btn-download-sm" download>RESUME PDF</a>
+                        </li>
+                    </ul>
+                </nav>
+                <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Open Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
         </div>
     </header>
 

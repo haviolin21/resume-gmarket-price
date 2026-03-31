@@ -30,14 +30,18 @@ body.dark-mode {
 
 body.dark-mode header { background: rgba(10, 10, 10, 0.8) !important; }
 body.dark-mode header.scrolled { background: #0a0a0a !important; }
-body.dark-mode .cap-item, body.dark-mode .project-card { background: #151515; }
+body.dark-mode .cap-item, body.dark-mode .project-card { background: #151515; border-color: #222; }
 body.dark-mode .p-stats { background: #222222; }
 body.dark-mode .modal-content { background: #151515; }
 body.dark-mode footer { background: #000; border-top: 1px solid #111; }
 body.dark-mode .btn-download-sm { background: #ffffff; color: #000; }
 body.dark-mode .btn-main { background: #ffffff; color: #000; border-color: #ffffff; }
+body.dark-mode .btn-main:hover { background: var(--gmarket-green); border-color: var(--gmarket-green); color: #fff; }
 body.dark-mode .btn-outline { border-color: #ffffff; color: #ffffff; }
+body.dark-mode .btn-outline:hover { background: #ffffff; color: #000; }
 body.dark-mode .tool-tag { background: #222222; color: #eee; }
+body.dark-mode .logo { color: #fff; }
+body.dark-mode .theme-toggle { color: #fff; }
 
 * {
   box-sizing: border-box;
@@ -46,7 +50,7 @@ body.dark-mode .tool-tag { background: #222222; color: #eee; }
 }
 
 html {
-  /* Lenis 충돌 방지를 위해 기본 smooth 스크롤 제거 */
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 body {
@@ -57,6 +61,7 @@ body {
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
 body.modal-open {
@@ -142,6 +147,7 @@ nav ul li a {
   font-weight: 700;
   color: var(--text-sub);
   transition: color 0.3s ease;
+  padding: 8px 0;
 }
 
 nav ul li a:hover, nav ul li a.active {
@@ -177,6 +183,17 @@ nav ul li a:hover, nav ul li a.active {
 .btn-download-sm:hover {
   background: var(--gmarket-green);
   color: #fff;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1100;
 }
 
 /* Hero Section */
@@ -229,6 +246,7 @@ nav ul li a:hover, nav ul li a.active {
 .hero-btns {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .btn-main {
@@ -240,6 +258,7 @@ nav ul li a:hover, nav ul li a.active {
   font-weight: 800;
   transition: var(--transition);
   border: 2px solid var(--gmarket-black);
+  white-space: nowrap;
 }
 
 .btn-main:hover {
@@ -258,6 +277,7 @@ nav ul li a:hover, nav ul li a.active {
   font-size: 1.2rem;
   font-weight: 800;
   transition: var(--transition);
+  white-space: nowrap;
 }
 
 .btn-outline:hover {
@@ -751,24 +771,60 @@ footer .logo span { color: var(--gmarket-green); }
   padding-top: 40px;
 }
 
-/* Mobile */
+/* Mobile Responsive Refinements */
 @media (max-width: 1024px) {
+  .hero { padding: 200px 0 120px; }
   .hero h1 { font-size: 4.2rem; }
   .hero-layout { grid-template-columns: 1fr; }
   .hero-visual { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 60px; }
-  .exp-row { grid-template-columns: 1fr; gap: 40px; }
-  .p-grid { grid-template-columns: 1fr; }
+  .exp-row { grid-template-columns: 1fr; gap: 40px; padding: 60px 0; }
+  .p-grid { grid-template-columns: 1fr; gap: 40px; }
   .p-stats { flex-direction: column; gap: 40px; }
   .modal-content { padding: 40px; }
 }
 
 @media (max-width: 768px) {
-  .hero h1 { font-size: 3.2rem; }
+  section { padding: 100px 0; }
+  .section-header { margin-bottom: 60px; }
+  .hero { padding: 160px 0 80px; }
+  .hero h1 { font-size: 3.2rem; letter-spacing: -2px; }
+  .hero p { font-size: 1.3rem; margin-bottom: 40px; }
   .section-title { font-size: 2.8rem; }
   .motivation-box { padding: 60px 40px; }
-  .p-card { padding: 40px; }
-  nav ul { display: none; }
+  .motivation-content { font-size: 1.3rem; }
+  .project-card { padding: 40px; }
+  .project-card::after { display: none; }
+  
+  /* Mobile Header Navigation */
+  .mobile-menu-btn { display: block; }
+  nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    height: 100vh;
+    background: var(--bg-white);
+    padding: 100px 40px;
+    transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    z-index: 1050;
+  }
+  nav.active { right: 0; }
+  nav ul { flex-direction: column; align-items: flex-start; gap: 30px; }
+  nav ul li a { font-size: 1.5rem; width: 100%; }
+  
   .f-contact { flex-direction: column; gap: 40px; }
   .f-box .val { font-size: 1.8rem; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2.6rem; }
+  .section-title { font-size: 2.2rem; }
+  .exp-meta .company { font-size: 1.8rem; }
+  .p-title { font-size: 2rem; }
+  .p-stats .val { font-size: 2.4rem; }
+  .modal-content { padding: 30px 20px; }
+  .modal-body h2 { font-size: 2rem; }
+  .btn-main, .btn-outline { width: 100%; text-align: center; padding: 18px 30px; font-size: 1.1rem; }
 }

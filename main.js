@@ -3,11 +3,11 @@ lucide.createIcons();
 
 // Initialize Smooth Scroll (Lenis)
 const lenis = new Lenis({
-    lerp: 0.2, // 반응성을 대폭 높임 (0.1 -> 0.2)
+    lerp: 0.2, 
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1.5, // 한 번의 휠로 더 많이 이동 (1.1 -> 1.5)
+    wheelMultiplier: 1.5, 
     smoothTouch: false,
     touchMultiplier: 2,
     infinite: false,
@@ -23,6 +23,29 @@ requestAnimationFrame(raf)
 // Theme Toggle Logic
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
+
+// Mobile Menu Logic
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const nav = document.getElementById('nav');
+
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+        const isActive = nav.classList.toggle('active');
+        mobileMenuBtn.innerHTML = isActive ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+        lucide.createIcons();
+    });
+}
+
+// Close mobile menu on link click
+document.querySelectorAll('#nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+            lucide.createIcons();
+        }
+    });
+});
 
 // Check for saved theme preference
 const savedTheme = localStorage.getItem('theme');
@@ -81,7 +104,7 @@ const projects = [
             <p>저는 결제액 상승을 위해 사용자 행동 데이터를 분석하고, 결제까지의 여정에서 이탈률을 개선하며, 특정 세그먼트를 집중 관리하여 결제액을 상승시키고, 이벤트 기획을 통해 신규 회원 유입을 늘리는 것이 핵심 전략이라고 판단했습니다.</p>
             <p>결제 퍼널 분석을 통해 이탈률이 가장 높게 발생하는 구간을 찾아내는 데 집중했습니다. SQL을 활용해 결제 퍼널을 세분화하여 분석한 결과, 채팅 구간에서 이탈률이 가장 높게 발생한다는 것을 발견했습니다. 앱 내 크롤링 된 카페 상품에서 채팅 이탈률이 높음을 확인했습니다. 이는 카페에서 크롤링된 상품에 대해 앱 내에서 채팅을 걸어도 판매자가 확인하지 못해 이탈이 발생한 것이었습니다.</p>
             <p>이를 해결하기 위해, 앱 내에서 채팅이 발생하면 카페 상품 게시물에 자동 댓글을 달아 판매자가 앱으로 유도되도록 하는 ‘카페 채팅 앱 유도’ 기능을 구현했습니다. 이를 통해 카페 회원이 앱으로 유입되었고, 연동 회원 수가 증가하면서 결제액 상승에 기여했습니다.</p>
-            <p>특정 세그먼트를 집중 관리하여 결제액을 상승시키기 위해, 결제액에 가장 큰 볼륨을 차지하는 상위 판/구매자를 집중 관리했습니다. SQL을 활용해 결제 데이터를 분석하고, 거래 횟수, 거래액, 상품 등록수, 채팅 응답률, 사기율, 택배거래 이용수와 같은 중고거래 주요 지표를 기반으로 앱 내 중고거래 지표 상위 10%에 해당하는 약 300명의 상위 판/구매자를 추출했습니다.</p>
+            <p>특정 세그먼트를 집중 관리하여 결제액을 상승시키기 위해, 결제액에 가장 큰 볼륨을 차지하는 상위 판/구매자를 집중 관리했습니다. SQL을 활용해 결제 데이터를 분석하고, 거래횟수, 거래액, 상품 등록수, 채팅 응답률, 사기율, 택배거래 이용수와 같은 중고거래 주요 지표를 기반으로 앱 내 중고거래 지표 상위 10%에 해당하는 약 300명의 상위 판/구매자를 추출했습니다.</p>
             <p>상위 판/구매자에게는 빠른 송금, 빠른 CS 응답을 제공하고, 판매 금액에 따른 리워드를 제공하여 중고나라 앱 내 경험을 개선하고, 앱 사용률을 높여 고액 결제 볼륨 상승을 목표했습니다. 그 결과, 상위 판/구매자의 거래액이 이전 대비 약 20% 상승하며 결제액 2.4배 상승에 기여했습니다.</p>
             <p>중고나라 앱 내에서 매달 진행하는 이벤트 기획에 참여하여, 중고나라만의 특색 있는 날인 ‘중요일’을 기획하고 실행했습니다. 중요일 이벤트는 신규 회원 유입과 이탈 회원 복귀를 목적으로 했으며, 고객이 결제에 가장 민감하게 반응하는 지표를 분석한 결과, 수수료 감면이 가장 큰 효율을 가져올 것으로 판단했습니다. 결제액이 가장 낮은 시간대에 수수료 감면 이벤트를 진행해, 결제 감소를 보완하고 결제액 증가까지 이뤄냈습니다. 신규 회원 인입과 기존 이탈 회원의 복귀를 유도하며, 결제액 상승에 긍정적인 영향을 주었습니다.</p>
             <p>최종적으로 23년 12월 ‘중요일’ 이벤트에서 23년 최고 결제액을 달성했고, 2023년 결제액 2.4배 상승이라는 목표를 달성했습니다. 결제제휴사업팀은 신설된 팀 중 23년 KPI 목표를 달성한 유일한 팀이 되었습니다.</p>
@@ -136,7 +159,7 @@ function openModal(index) {
     `;
 
     modal.style.display = 'flex';
-    modalContent.scrollTop = 0; // Reset scroll position
+    modalContent.scrollTop = 0; 
     document.body.classList.add('modal-open');
 }
 
@@ -193,7 +216,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             e.preventDefault();
             lenis.scrollTo(targetElement, {
                 offset: -80,
-                duration: 1.5,
+                duration: 1.2,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
             })
         }
@@ -206,26 +229,27 @@ const navLinks = document.querySelectorAll('nav ul li a');
 const sections = document.querySelectorAll('section');
 
 window.addEventListener('scroll', () => {
-    // Header shadow and height
     if (window.scrollY > 20) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
 
-    // Active link highlighting
+    // High-precision Active link highlighting
     let current = '';
+    const scrollPos = window.scrollY + 150; 
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 120) {
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
             current = section.getAttribute('id');
         }
     });
 
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href').includes(current)) {
+        if (link.getAttribute('href') === `#${current}`) {
             link.classList.add('active');
         }
     });
